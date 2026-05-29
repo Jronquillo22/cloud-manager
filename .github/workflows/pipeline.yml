@@ -1,0 +1,19 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar repo
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t mi-app .
+
+      - name: Test básico
+        run: docker run mi-app echo "BUILD OK"
