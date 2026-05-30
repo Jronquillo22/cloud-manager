@@ -14,15 +14,8 @@
 
     <h2>Inicio de sesión</h2>
 
-    <div class="form-group">
-      <label>Usuario</label>
-      <input id="loginUser" placeholder="Usuario">
-    </div>
-
-    <div class="form-group">
-      <label>Contraseña</label>
-      <input id="loginPass" type="password" placeholder="Contraseña">
-    </div>
+    <input id="loginUser" placeholder="Usuario">
+    <input id="loginPass" type="password" placeholder="Contraseña">
 
     <button onclick="login()">Ingresar</button>
     <button onclick="showRegister()">Crear cuenta</button>
@@ -36,26 +29,15 @@
 
     <h2>Registro</h2>
 
-    <div class="form-group">
-      <label>Usuario</label>
-      <input id="regUser" placeholder="Usuario">
+    <input id="regUser" placeholder="Usuario">
+    <input id="regPass" type="password" placeholder="Contraseña">
+
+    <div class="role-buttons">
+      <button onclick="setRole('usuario')">Usuario</button>
+      <button onclick="setRole('administrador')">Administrador</button>
     </div>
 
-    <div class="form-group">
-      <label>Contraseña</label>
-      <input id="regPass" type="password" placeholder="Contraseña">
-    </div>
-
-    <div class="form-group">
-      <label>Tipo de cuenta</label>
-
-      <div class="role-buttons">
-        <button type="button" onclick="setRole('usuario')">Usuario</button>
-        <button type="button" onclick="setRole('administrador')">Administrador</button>
-      </div>
-    </div>
-
-    <p id="roleSelected">Rol seleccionado: usuario</p>
+    <p id="roleSelected">Rol: usuario</p>
 
     <button onclick="register()">Registrarse</button>
     <button onclick="showLogin()">Volver</button>
@@ -66,11 +48,14 @@
 <!-- APP -->
 <div id="app" class="hidden">
 
+  <!-- NAV -->
   <div class="navbar">
     <div>TechNova Services</div>
 
-    <div class="nav-buttons">
-      <button onclick="showView()">Panel</button>
+    <div>
+      <button onclick="showPanel('user')">Usuario</button>
+      <button onclick="showPanel('admin')">Admin</button>
+      <button onclick="showPanel('monitor')">Monitor</button>
       <button onclick="logout()">Salir</button>
     </div>
   </div>
@@ -78,15 +63,28 @@
   <div class="content">
 
     <!-- USER -->
-    <div id="userPanel" class="view hidden">
-      <h2>Panel de Usuario</h2>
+    <div id="userPanel" class="panel hidden">
+
+      <h2>Panel Usuario</h2>
 
       <div class="grid">
 
         <div class="card">
           <h3>Agendar cita</h3>
-          <input id="citaServicio" placeholder="Servicio">
+
+          <input id="citaNombre" placeholder="Nombre">
+          <input id="citaEmail" placeholder="Correo">
+          <input id="citaTelefono" placeholder="Teléfono">
+
+          <select id="citaServicio">
+            <option>Soporte Técnico</option>
+            <option>Infraestructura Cloud</option>
+            <option>DevOps</option>
+            <option>Seguridad</option>
+          </select>
+
           <input id="citaFecha" type="date">
+
           <button onclick="guardarCita()">Enviar</button>
         </div>
 
@@ -94,13 +92,14 @@
           <h3>Cotización</h3>
 
           <select id="cotServicio">
-            <option>Infraestructura Cloud</option>
             <option>Soporte Técnico</option>
-            <option>Seguridad Informática</option>
+            <option>Infraestructura Cloud</option>
             <option>DevOps</option>
+            <option>Seguridad</option>
           </select>
 
           <input id="cotDetalle" placeholder="Detalle">
+
           <button onclick="guardarCotizacion()">Enviar</button>
         </div>
 
@@ -113,13 +112,9 @@
     </div>
 
     <!-- ADMIN -->
-    <div id="adminPanel" class="view hidden">
-      <h2>Panel Administrador</h2>
+    <div id="adminPanel" class="panel hidden">
 
-      <h3>Usuarios</h3>
-      <table>
-        <tbody id="userTable"></tbody>
-      </table>
+      <h2>Panel Administrador</h2>
 
       <h3>Citas</h3>
       <table>
@@ -130,6 +125,18 @@
       <table>
         <tbody id="cotTable"></tbody>
       </table>
+
+    </div>
+
+    <!-- MONITOR -->
+    <div id="monitorPanel" class="panel hidden">
+
+      <h2>Monitor del Sistema</h2>
+
+      <div class="card">
+        <h3>Actividad de usuarios</h3>
+        <canvas id="chart" width="400"></canvas>
+      </div>
 
     </div>
 

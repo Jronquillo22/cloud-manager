@@ -1,139 +1,174 @@
 let role = "usuario";
 
-/* LOGIN / REGISTER */
-
-function setRole(r) {
+function setRole(r){
   role = r;
-  document.getElementById("roleSelected").innerText = "Rol: " + r;
-}
-
-function showRegister() {
-  document.getElementById("loginBox").classList.add("hidden");
-  document.getElementById("registerBox").classList.remove("hidden");
-}
-
-function showLogin() {
-  document.getElementById("registerBox").classList.add("hidden");
-  document.getElementById("loginBox").classList.remove("hidden");
-}
-
-/* REGISTER */
-function register() {
-  if (!regUser.value || !regPass.value) {
-    alert("Completa todos los campos");
-    return;
-  }
-
-  let users = JSON.parse(localStorage.getItem("users") || "[]");
-
-  users.push({
-    user: regUser.value,
-    pass: regPass.value,
-    role: role
-  });
-
-  localStorage.setItem("users", JSON.stringify(users));
-
-  alert("Usuario creado");
-  showLogin();
+  roleSelected.innerText = "Rol: " + r;
 }
 
 /* LOGIN */
-function login() {
-  if (!loginUser.value || !loginPass.value) {
-    alert("Completa los campos");
-    return;
-  }
-
-  let users = JSON.parse(localStorage.getItem("users") || "[]");
+function login(){
+  let users = JSON.parse(localStorage.getItem("users")||"[]");
 
   let found = users.find(u =>
     u.user === loginUser.value &&
     u.pass === loginPass.value
   );
 
-  if (!found) {
-    alert("Credenciales incorrectas");
-    return;
-  }
+  if(!found){ alert("Error"); return; }
 
   role = found.role;
 
-  document.getElementById("loginBox").classList.add("hidden");
-  document.getElementById("registerBox").classList.add("hidden");
-  document.getElementById("app").classList.remove("hidden");
+  loginBox.classList.add("hidden");
+  app.classList.remove("hidden");
 
-  showView();
+  showPanel("user");
+
+  registerActivity();
 }
 
-/* VIEW */
-function showView() {
-  document.getElementById("userPanel").classList.add("hidden");
-  document.getElementById("adminPanel").classList.add("hidden");
+/* REGISTER */
+function register(){
 
-  if (role === "administrador") {
-    document.getElementById("adminPanel").classList.remove("hidden");
-    loadAdmin();
-  } else {
-    document.getElementById("userPanel").classList.remove("hidden");
-    loadUser();
+  if(!regUser.value || !regPass.value){
+    alert("Campos vacíos");
+    return;
   }
+
+  let users = JSON.parse(localStorage.getItem("users")||"[]");
+
+  users.push({
+    user: regUser.value,
+    pass: regPass.value,
+    role
+  });
+
+  localStorage.setItem("users",JSON.stringify(users));
+
+  showLogin();
 }
 
-/* USER */
-function guardarCita() {
-  let citas = JSON.parse(localStorage.getItem("citas") || "[]");
+/* PANELS */
+function showPanel(p){
+
+  userPanel.classList.add("hidden");
+  adminPanel.classList.add("hidden");
+  monitorPanel.classList.add("hidden");
+
+  if(p==="user") userPanel.classList.remove("hidden");
+  if(p==="admin") loadAdmin(), adminPanel.classList.remove("hidden");
+  if(p==="monitor") monitorPanel.classList.remove("hidden"), drawChart();
+}
+
+/* CITA */
+function guardarCita(){
+  let citas = JSON.parse(localStorage.getItem("citas")||"[]");
 
   citas.push({
-    servicio: citaServicio.value,
-    fecha: citaFecha.value,
-    estado: "pendiente"
+    nombre:citaNombre.value,
+    email:citaEmail.value,
+    telefono:citaTelefono.value,
+    servicio:citaServicio.value,
+    fecha:citaFecha.value,
+    estado:"pendiente"
   });
 
-  localStorage.setItem("citas", JSON.stringify(citas));
+  localStorage.setItem("citas",JSON.stringify(citas));
+
+  registerActivity();
 }
 
-function guardarCotizacion() {
-  let cot = JSON.parse(localStorage.getItem("cot") || "[]");
+/* COT */
+function guardarCotizacion(){
+  let cot = JSON.parse(localStorage.getItem("cot")||"[]");
 
   cot.push({
-    servicio: cotServicio.value,
-    detalle: cotDetalle.value,
-    respuesta: ""
+    servicio:cotServicio.value,
+    detalle:cotDetalle.value,
+    respuesta:""
   });
 
-  localStorage.setItem("cot", JSON.stringify(cot));
+  localStorage.setItem("cot",JSON.stringify(cot));
+
+  registerActivity();
 }
 
 /* ADMIN */
-function loadAdmin() {
-  let users = JSON.parse(localStorage.getItem("users") || "[]");
-  let citas = JSON.parse(localStorage.getItem("citas") || "[]");
-  let cot = JSON.parse(localStorage.getItem("cot") || "[]");
+function loadAdmin(){
 
-  userTable.innerHTML = users.map(u =>
-    `<tr><td>${u.user}</td><td>${u.role}</td></tr>`
-  ).join("");
+  let citas = JSON.parse(localStorage.getItem("citas")||"[]");
+  let cot = JSON.parse(localStorage.getItem("cot")||"[]");
 
-  citaTable.innerHTML = citas.map(c =>
-    `<tr><td>${c.servicio}</td><td>${c.fecha}</td><td>${c.estado}</td></tr>`
-  ).join("");
+  citaTable.innerHTML = citas.map((c,i)=>
+  `<tr>
+    <td>${c.nombre}</td>
+    <td>${c.servicio}</td>
+    <td>${c.estado}</td>
+    <td>
+      <button onclick="aceptar(${i})">Aceptar</button>
+      <button onclick="rechazar(${i})">Rechazar</button>
+      <button onclick="reagendar(${i})">Reagendar</button>
+    </td>
+  </tr>`).join("");
 
-  cotTable.innerHTML = cot.map(c =>
-    `<tr><td>${c.servicio}</td><td>${c.detalle}</td><td>${c.respuesta}</td></tr>`
-  ).join("");
+  cotTable.innerHTML = cot.map((c,i)=>
+  `<tr>
+    <td>${c.servicio}</td>
+    <td>${c.detalle}</td>
+    <td>${c.respuesta}</td>
+    <td><button onclick="responder(${i})">Responder</button></td>
+  </tr>`).join("");
 }
 
-/* USER VIEW */
-function loadUser() {
-  let cot = JSON.parse(localStorage.getItem("cot") || "[]");
+/* ACTIONS */
+function aceptar(i){
+  let c = JSON.parse(localStorage.getItem("citas"));
+  c[i].estado="aceptada";
+  localStorage.setItem("citas",JSON.stringify(c));
+  loadAdmin();
+}
 
-  userResponses.innerHTML = cot.map(c =>
-    `<p>${c.servicio} → ${c.respuesta || "Pendiente"}</p>`
-  ).join("");
+function rechazar(i){
+  let c = JSON.parse(localStorage.getItem("citas"));
+  c[i].estado="rechazada";
+  localStorage.setItem("citas",JSON.stringify(c));
+  loadAdmin();
+}
+
+function reagendar(i){
+  let c = JSON.parse(localStorage.getItem("citas"));
+  c[i].estado="reagendada";
+  localStorage.setItem("citas",JSON.stringify(c));
+  loadAdmin();
+}
+
+function responder(i){
+  let c = JSON.parse(localStorage.getItem("cot"));
+  c[i].respuesta = prompt("Respuesta:");
+  localStorage.setItem("cot",JSON.stringify(c));
+  loadAdmin();
+}
+
+/* MONITOR */
+function registerActivity(){
+  let data = JSON.parse(localStorage.getItem("activity")||"[0,0,0]");
+  data[0]++;
+  localStorage.setItem("activity",JSON.stringify(data));
+}
+
+function drawChart(){
+  let ctx = document.getElementById("chart").getContext("2d");
+
+  let data = JSON.parse(localStorage.getItem("activity")||"[10,5,8]");
+
+  ctx.clearRect(0,0,400,300);
+  ctx.fillStyle="green";
+
+  data.forEach((v,i)=>{
+    ctx.fillRect(i*60,150-v*5,40,v*5);
+  });
 }
 
 /* LOGOUT */
-function logout() {
+function logout(){
   location.reload();
 }

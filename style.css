@@ -5,99 +5,59 @@ body {
   color: white;
 }
 
-/* LOGIN / REGISTER */
+.hidden { display:none; }
+
+/* LOGIN */
 .auth-container {
   position: fixed;
   inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #0d1117;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
 .auth-card {
-  width: 380px;
-  background: #161b22;
-  padding: 30px;
-  border-radius: 12px;
-  text-align: center;
-}
-
-.form-group {
-  margin-bottom: 15px;
-  text-align: left;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-input, select {
-  width: 100%;
-  padding: 10px;
-  background: #0d1117;
-  border: 1px solid #30363d;
-  color: white;
-}
-
-.role-buttons {
-  display: flex;
-  gap: 10px;
-}
-
-.role-buttons button {
-  flex: 1;
-  background: #30363d;
-  color: white;
-  border: none;
-  padding: 8px;
+  width: 350px;
+  background:#161b22;
+  padding:25px;
+  border-radius:10px;
+  text-align:center;
 }
 
 /* NAV */
 .navbar {
-  display: flex;
-  justify-content: space-between;
-  padding: 15px;
-  background: #161b22;
+  display:flex;
+  justify-content:space-between;
+  padding:15px;
+  background:#161b22;
 }
 
-/* CONTENT */
-.content {
-  padding: 20px;
-}
-
+/* GRID */
 .grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
 }
 
 .card {
-  background: #161b22;
-  padding: 20px;
-  border-radius: 10px;
+  background:#161b22;
+  padding:15px;
+  border-radius:10px;
 }
 
-.card.full {
-  grid-column: span 2;
-}
+.card.full { grid-column: span 2; }
 
 /* TABLE */
 table {
-  width: 100%;
-  background: #161b22;
-  margin-bottom: 20px;
-}
-
-.hidden {
-  display: none;
+  width:100%;
+  background:#161b22;
+  margin-bottom:20px;
 }
 
 button {
-  margin-top: 10px;
-  padding: 8px;
-  background: #238636;
-  border: none;
-  color: white;
+  background:#238636;
+  color:white;
+  border:none;
+  padding:8px;
+  margin-top:5px;
 }
