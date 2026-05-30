@@ -1,4 +1,9 @@
-let selectedRole = "user";
+let role = "usuario";
+
+function setRole(r) {
+  role = r;
+  document.getElementById("roleSelected").innerText = "Rol: " + r;
+}
 
 function showRegister() {
   document.getElementById("loginBox").classList.add("hidden");
@@ -10,32 +15,28 @@ function showLogin() {
   document.getElementById("loginBox").classList.remove("hidden");
 }
 
-function setRole(role) {
-  selectedRole = role;
-  document.getElementById("roleSelected").innerText = "Rol: " + role;
-}
-
 function register() {
-  let user = document.getElementById("regUser").value;
-  let pass = document.getElementById("regPass").value;
-
   let users = JSON.parse(localStorage.getItem("users") || "[]");
 
-  users.push({ user, pass, role: selectedRole });
+  users.push({
+    user: regUser.value,
+    pass: regPass.value,
+    role: role
+  });
 
   localStorage.setItem("users", JSON.stringify(users));
 
-  alert("Usuario registrado");
+  alert("Usuario creado");
   showLogin();
 }
 
 function login() {
-  let user = document.getElementById("loginUser").value;
-  let pass = document.getElementById("loginPass").value;
-
   let users = JSON.parse(localStorage.getItem("users") || "[]");
 
-  let found = users.find(u => u.user === user && u.pass === pass);
+  let found = users.find(u =>
+    u.user === loginUser.value &&
+    u.pass === loginPass.value
+  );
 
   if (!found) {
     alert("Credenciales incorrectas");
@@ -45,26 +46,54 @@ function login() {
   document.getElementById("loginBox").classList.add("hidden");
   document.getElementById("dashboard").classList.remove("hidden");
 
-  if (found.role === "admin") {
-    document.getElementById("adminPanel").classList.remove("hidden");
-
-    loadUsers();
+  if (found.role === "administrador") {
+    document.getElementById("adminMenu").classList.remove("hidden");
+    loadAdminData();
   } else {
-    document.getElementById("userPanel").classList.remove("hidden");
+    document.getElementById("userMenu").classList.remove("hidden");
   }
 }
 
-function loadUsers() {
-  let users = JSON.parse(localStorage.getItem("users") || "[]");
-  let list = document.getElementById("userList");
-
-  list.innerHTML = "";
-
-  users.forEach(u => {
-    let li = document.createElement("li");
-    li.innerText = `${u.user} - ${u.role}`;
-    list.appendChild(li);
+/* ===== USUARIO ===== */
+function guardarCita() {
+  let citas = JSON.parse(localStorage.getItem("citas") || "[]");
+  citas.push({
+    servicio: citaServicio.value,
+    fecha: citaFecha.value
   });
+  localStorage.setItem("citas", JSON.stringify(citas));
+  alert("Cita enviada");
+}
+
+function guardarCotizacion() {
+  let cot = JSON.parse(localStorage.getItem("cot") || "[]");
+  cot.push({
+    servicio: cotServicio.value,
+    detalle: cotDetalle.value
+  });
+  localStorage.setItem("cot", JSON.stringify(cot));
+  alert("Cotización enviada");
+}
+
+/* ===== ADMIN ===== */
+function loadAdminData() {
+  let users = JSON.parse(localStorage.getItem("users") || "[]");
+  let citas = JSON.parse(localStorage.getItem("citas") || "[]");
+  let cot = JSON.parse(localStorage.getItem("cot") || "[]");
+
+  userList.innerHTML = users.map(u => `<li>${u.user} (${u.role})</li>`).join("");
+  citaList.innerHTML = citas.map(c => `<li>${c.servicio} - ${c.fecha}</li>`).join("");
+  cotList.innerHTML = cot.map(c => `<li>${c.servicio} - ${c.detalle}</li>`).join("");
+}
+
+function showSection(id) {
+  document.querySelectorAll(".section").forEach(s => s.classList.add("hidden"));
+  document.getElementById(id).classList.remove("hidden");
+}
+
+function showAdminSection(id) {
+  document.querySelectorAll(".section").forEach(s => s.classList.add("hidden"));
+  document.getElementById(id).classList.remove("hidden");
 }
 
 function logout() {
