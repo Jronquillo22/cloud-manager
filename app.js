@@ -99,3 +99,72 @@ function showAdminSection(id) {
 function logout() {
   location.reload();
 }
+
+function addUser(role) {
+  let users = JSON.parse(localStorage.getItem("users") || "[]");
+
+  users.push({
+    user: newUser.value,
+    pass: newPass.value,
+    role: role
+  });
+
+  localStorage.setItem("users", JSON.stringify(users));
+  loadAdminData();
+}
+
+function deleteUser(index) {
+  let users = JSON.parse(localStorage.getItem("users") || "[]");
+  users.splice(index, 1);
+  localStorage.setItem("users", JSON.stringify(users));
+  loadAdminData();
+}
+
+function loadAdminData() {
+  let users = JSON.parse(localStorage.getItem("users") || "[]");
+  let citas = JSON.parse(localStorage.getItem("citas") || "[]");
+  let cot = JSON.parse(localStorage.getItem("cot") || "[]");
+
+  userList.innerHTML = users.map((u, i) =>
+    `<li>
+      ${u.user} (${u.role})
+      <button onclick="deleteUser(${i})">❌</button>
+    </li>`
+  ).join("");
+
+  citaList.innerHTML = citas.map((c, i) =>
+    `<li>
+      ${c.servicio} - ${c.fecha} - ${c.estado || "pendiente"}
+      <button onclick="aceptarCita(${i})">✔️</button>
+      <button onclick="rechazarCita(${i})">❌</button>
+      <button onclick="reagendarCita(${i})">🔁</button>
+    </li>`
+  ).join("");
+
+  cotList.innerHTML = cot.map((c, i) =>
+    `<li>
+      ${c.servicio}
+      <button onclick="responderCot(${i})">💬 Responder</button>
+    </li>`
+  ).join("");
+}
+
+function responderCot(i) {
+  let cot = JSON.parse(localStorage.getItem("cot") || "[]");
+
+  let respuesta = prompt("Respuesta de cotización:");
+  cot[i].respuesta = respuesta;
+
+  localStorage.setItem("cot", JSON.stringify(cot));
+  loadAdminData();
+}
+
+function responderCot(i) {
+  let cot = JSON.parse(localStorage.getItem("cot") || "[]");
+
+  let respuesta = prompt("Respuesta de cotización:");
+  cot[i].respuesta = respuesta;
+
+  localStorage.setItem("cot", JSON.stringify(cot));
+  loadAdminData();
+}

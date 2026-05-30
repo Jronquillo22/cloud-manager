@@ -87,9 +87,16 @@
     <button onclick="showAdminSection('cotizaciones')">💰 Cotizaciones</button>
     <button onclick="showAdminSection('sistema')">⚙️ Sistema</button>
 
-    <div id="usuarios" class="section hidden">
-      <h3>Usuarios Registrados</h3>
-      <ul id="userList"></ul>
+        <div id="usuarios" class="section hidden">
+    <h3>👥 Gestión de Usuarios</h3>
+
+    <input id="newUser" placeholder="Usuario">
+    <input id="newPass" placeholder="Contraseña">
+
+    <button onclick="addUser('usuario')">➕ Agregar Usuario</button>
+    <button onclick="addUser('administrador')">➕ Agregar Admin</button>
+
+    <ul id="userList"></ul>
     </div>
 
     <div id="citas" class="section hidden">
