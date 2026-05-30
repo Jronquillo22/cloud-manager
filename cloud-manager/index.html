@@ -9,42 +9,51 @@
 <body>
 
 <!-- LOGIN -->
-<div id="loginBox" class="auth-container">
-  <div class="auth-card">
+<div id="loginBox" class="container">
 
-    <h2>Inicio de sesión</h2>
+  <div class="card">
+
+    <h2>Iniciar Sesión</h2>
 
     <input id="loginUser" placeholder="Usuario">
     <input id="loginPass" type="password" placeholder="Contraseña">
 
     <button onclick="login()">Ingresar</button>
-    <button onclick="showRegister()">Crear cuenta</button>
+
+    <p>
+      ¿No tienes cuenta?
+      <button onclick="showRegister()">Registrarse</button>
+    </p>
 
   </div>
+
 </div>
 
 <!-- REGISTER -->
-<div id="registerBox" class="auth-container hidden">
-  <div class="auth-card">
+<div id="registerBox" class="container hidden">
+
+  <div class="card">
 
     <h2>Registro</h2>
 
     <input id="regUser" placeholder="Usuario">
     <input id="regPass" type="password" placeholder="Contraseña">
 
-    <div>
-      <button onclick="setRole('usuario')">Usuario</button>
-      <button onclick="setRole('administrador')">Administrador</button>
-    </div>
+    <select id="regRole">
+      <option value="usuario">Usuario</option>
+      <option value="admin">Administrador</option>
+    </select>
 
-    <p id="roleSelected">Rol: usuario</p>
+    <button onclick="register()">Crear cuenta</button>
 
-    <button onclick="register()">Registrarse</button>
-    <button onclick="showLogin()">Volver</button>
+    <p>
+      ¿Ya tienes cuenta?
+      <button onclick="showLogin()">Volver al login</button>
+    </p>
 
   </div>
-</div>
 
+</div>
 <!-- APP -->
 <div id="app" class="hidden">
 
