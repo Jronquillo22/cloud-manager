@@ -43,14 +43,20 @@ function login() {
     return;
   }
 
+  // OCULTAR LOGIN
   document.getElementById("loginBox").classList.add("hidden");
-  document.getElementById("dashboard").classList.remove("hidden");
+
+  // MOSTRAR APP
+  document.getElementById("app").classList.remove("hidden");
+
+  role = found.role;
 
   if (found.role === "administrador") {
-    document.getElementById("adminMenu").classList.remove("hidden");
-    loadAdminData();
+    document.getElementById("adminPanel").classList.remove("hidden");
+    loadAdmin(); // IMPORTANTE
   } else {
-    document.getElementById("userMenu").classList.remove("hidden");
+    document.getElementById("userPanel").classList.remove("hidden");
+    loadUserResponses();
   }
 }
 
@@ -76,26 +82,6 @@ function guardarCotizacion() {
 }
 
 /* ===== ADMIN ===== */
-function loadAdminData() {
-  let users = JSON.parse(localStorage.getItem("users") || "[]");
-  let citas = JSON.parse(localStorage.getItem("citas") || "[]");
-  let cot = JSON.parse(localStorage.getItem("cot") || "[]");
-
-  userList.innerHTML = users.map(u => `<li>${u.user} (${u.role})</li>`).join("");
-  citaList.innerHTML = citas.map(c => `<li>${c.servicio} - ${c.fecha}</li>`).join("");
-  cotList.innerHTML = cot.map(c => `<li>${c.servicio} - ${c.detalle}</li>`).join("");
-}
-
-function showSection(id) {
-  document.querySelectorAll(".section").forEach(s => s.classList.add("hidden"));
-  document.getElementById(id).classList.remove("hidden");
-}
-
-function showAdminSection(id) {
-  document.querySelectorAll(".section").forEach(s => s.classList.add("hidden"));
-  document.getElementById(id).classList.remove("hidden");
-}
-
 function logout() {
   location.reload();
 }
@@ -120,34 +106,7 @@ function deleteUser(index) {
   loadAdminData();
 }
 
-function loadAdminData() {
-  let users = JSON.parse(localStorage.getItem("users") || "[]");
-  let citas = JSON.parse(localStorage.getItem("citas") || "[]");
-  let cot = JSON.parse(localStorage.getItem("cot") || "[]");
 
-  userList.innerHTML = users.map((u, i) =>
-    `<li>
-      ${u.user} (${u.role})
-      <button onclick="deleteUser(${i})">❌</button>
-    </li>`
-  ).join("");
-
-  citaList.innerHTML = citas.map((c, i) =>
-    `<li>
-      ${c.servicio} - ${c.fecha} - ${c.estado || "pendiente"}
-      <button onclick="aceptarCita(${i})">✔️</button>
-      <button onclick="rechazarCita(${i})">❌</button>
-      <button onclick="reagendarCita(${i})">🔁</button>
-    </li>`
-  ).join("");
-
-  cotList.innerHTML = cot.map((c, i) =>
-    `<li>
-      ${c.servicio}
-      <button onclick="responderCot(${i})">💬 Responder</button>
-    </li>`
-  ).join("");
-}
 
 function responderCot(i) {
   let cot = JSON.parse(localStorage.getItem("cot") || "[]");
