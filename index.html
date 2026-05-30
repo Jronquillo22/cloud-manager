@@ -1,10 +1,67 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Cloud Manager</title>
+  <meta charset="UTF-8">
+  <title>Fuego Energy Cloud System</title>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <h1>Version 2 - Deploy automático funcionando</h1>
-    <p>AWS EC2 + Docker + GitHub + ic + cd </p>
+
+<div class="container">
+
+  <!-- LOGIN -->
+  <div id="loginBox" class="box">
+    <h2>🔐 Login</h2>
+    <input type="text" id="loginUser" placeholder="Usuario">
+    <input type="password" id="loginPass" placeholder="Contraseña">
+    <button onclick="login()">Entrar</button>
+    <p onclick="showRegister()">Crear cuenta</p>
+  </div>
+
+  <!-- REGISTER -->
+  <div id="registerBox" class="box hidden">
+    <h2>📝 Registro</h2>
+    <input type="text" id="regUser" placeholder="Usuario">
+    <input type="password" id="regPass" placeholder="Contraseña">
+
+    <select id="regRole">
+      <option value="user">Usuario</option>
+      <option value="admin">Admin</option>
+    </select>
+
+    <button onclick="register()">Registrarse</button>
+    <p onclick="showLogin()">Ya tengo cuenta</p>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="dashboard" class="hidden">
+    <h1>🚀 Fuego Energy Cloud Dashboard</h1>
+
+    <div id="adminPanel" class="panel hidden">
+      <h2>🛠️ Panel Admin</h2>
+      <p>Gestión de infraestructura AWS</p>
+      <ul>
+        <li>EC2: Activo 🟢</li>
+        <li>Docker: Running 🟢</li>
+        <li>CI/CD: Enabled 🟢</li>
+      </ul>
+    </div>
+
+    <div id="userPanel" class="panel hidden">
+      <h2>👤 Panel Usuario</h2>
+      <p>Acceso a sistema de monitoreo</p>
+      <ul>
+        <li>Estado sistema: Online 🟢</li>
+        <li>Servicios: Estables 🟢</li>
+      </ul>
+    </div>
+
+    <button onclick="logout()">Cerrar sesión</button>
+  </div>
+
+</div>
+
+<script src="app.js"></script>
 </body>
 </html>
