@@ -2,122 +2,132 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>TechNova Services Cloud</title>
+  <title>TechNova Services</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <!-- LOGIN -->
-<div id="loginBox" class="box">
-  <h2>🔐 Inicio de Sesión</h2>
+<div id="loginBox" class="center-box">
+  <h2>Inicio de sesión</h2>
 
-  <input type="text" id="loginUser" placeholder="Usuario">
-  <input type="password" id="loginPass" placeholder="Contraseña">
+  <input id="loginUser" placeholder="Usuario">
+  <input id="loginPass" type="password" placeholder="Contraseña">
 
   <button onclick="login()">Ingresar</button>
   <button onclick="showRegister()">Crear cuenta</button>
 </div>
 
-<!-- REGISTRO -->
-<div id="registerBox" class="box hidden">
-  <h2>📝 Registro de Usuario</h2>
+<!-- REGISTER -->
+<div id="registerBox" class="center-box hidden">
+  <h2>Registro</h2>
 
-  <input type="text" id="regUser" placeholder="Usuario">
-  <input type="password" id="regPass" placeholder="Contraseña">
+  <input id="regUser" placeholder="Usuario">
+  <input id="regPass" type="password" placeholder="Contraseña">
 
-  <div>
+  <div class="role-buttons">
     <button onclick="setRole('usuario')">Usuario</button>
     <button onclick="setRole('administrador')">Administrador</button>
   </div>
-
-  <p id="roleSelected">Rol: usuario</p>
 
   <button onclick="register()">Registrarse</button>
   <button onclick="showLogin()">Volver</button>
 </div>
 
-<!-- DASHBOARD -->
-<div id="dashboard" class="hidden">
+<!-- APP -->
+<div id="app" class="hidden">
 
-  <header>
-    <h1>🚀 TechNova Services Cloud</h1>
-    <button onclick="logout()">Cerrar sesión</button>
-  </header>
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <div>TechNova Services</div>
 
-  <!-- MENU USUARIO -->
-  <div id="userMenu" class="panel hidden">
-    <h2>👤 Panel de Usuario</h2>
-
-    <button onclick="showSection('cita')">📅 Agendar cita</button>
-    <button onclick="showSection('cotizacion')">💰 Solicitar cotización</button>
-    <button onclick="showSection('servicios')">🧰 Servicios</button>
-
-    <div id="cita" class="section hidden">
-      <h3>Agendar Cita</h3>
-      <input type="text" id="citaServicio" placeholder="Servicio requerido">
-      <input type="date" id="citaFecha">
-      <button onclick="guardarCita()">Enviar cita</button>
-    </div>
-
-    <div id="cotizacion" class="section hidden">
-      <h3>Solicitar Cotización</h3>
-      <input type="text" id="cotServicio" placeholder="Servicio">
-      <textarea id="cotDetalle" placeholder="Detalle del proyecto"></textarea>
-      <button onclick="guardarCotizacion()">Enviar cotización</button>
-    </div>
-
-    <div id="servicios" class="section hidden">
-      <h3>Servicios Disponibles</h3>
-      <ul>
-        <li>☁️ Infraestructura Cloud AWS</li>
-        <li>🐳 Contenedores Docker</li>
-        <li>🔐 Seguridad y Redes</li>
-        <li>⚙️ Automatización DevOps</li>
-      </ul>
+    <div class="nav-buttons">
+      <button onclick="showView('dashboard')">Dashboard</button>
+      <button onclick="showView('citas')">Citas</button>
+      <button onclick="showView('cotizaciones')">Cotizaciones</button>
+      <button onclick="logout()">Salir</button>
     </div>
   </div>
 
-  <!-- ADMIN -->
-  <div id="adminMenu" class="panel hidden">
-    <h2>🛠️ Panel Administrador</h2>
+  <!-- CONTENIDO -->
+  <div class="content">
 
-    <button onclick="showAdminSection('usuarios')">👥 Usuarios</button>
-    <button onclick="showAdminSection('citas')">📅 Citas</button>
-    <button onclick="showAdminSection('cotizaciones')">💰 Cotizaciones</button>
-    <button onclick="showAdminSection('sistema')">⚙️ Sistema</button>
+    <!-- USER -->
+    <div id="userPanel" class="view hidden">
+      <h2>Panel de Usuario</h2>
 
-        <div id="usuarios" class="section hidden">
-    <h3>👥 Gestión de Usuarios</h3>
+      <div class="grid">
+        <div class="card">
+          <h3>Solicitar cita</h3>
+          <input id="citaServicio" placeholder="Servicio">
+          <input id="citaFecha" type="date">
+          <button onclick="guardarCita()">Enviar</button>
+        </div>
 
-    <input id="newUser" placeholder="Usuario">
-    <input id="newPass" placeholder="Contraseña">
+        <div class="card">
+          <h3>Solicitar cotización</h3>
+          <input id="cotServicio" placeholder="Servicio">
+          <textarea id="cotDetalle" placeholder="Detalle"></textarea>
+          <button onclick="guardarCotizacion()">Enviar</button>
+        </div>
 
-    <button onclick="addUser('usuario')">➕ Agregar Usuario</button>
-    <button onclick="addUser('administrador')">➕ Agregar Admin</button>
-
-    <ul id="userList"></ul>
+        <div class="card full">
+          <h3>Respuestas</h3>
+          <div id="userResponses"></div>
+        </div>
+      </div>
     </div>
 
-    <div id="citas" class="section hidden">
-      <h3>Citas Agendadas</h3>
-      <ul id="citaList"></ul>
+    <!-- ADMIN -->
+    <div id="adminPanel" class="view hidden">
+
+      <h2>Panel Administrador</h2>
+
+      <div class="table-container">
+
+        <h3>Usuarios</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Usuario</th>
+              <th>Rol</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="userTable"></tbody>
+        </table>
+
+        <h3>Citas</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Servicio</th>
+              <th>Fecha</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="citaTable"></tbody>
+        </table>
+
+        <h3>Cotizaciones</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Servicio</th>
+              <th>Detalle</th>
+              <th>Respuesta</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody id="cotTable"></tbody>
+        </table>
+
+      </div>
     </div>
 
-    <div id="cotizaciones" class="section hidden">
-      <h3>Cotizaciones Recibidas</h3>
-      <ul id="cotList"></ul>
-    </div>
-
-    <div id="sistema" class="section hidden">
-      <h3>Estado del Sistema</h3>
-      <p>EC2: Activo 🟢</p>
-      <p>Docker: Running 🟢</p>
-      <p>CI/CD: OK 🟢</p>
-      <p>Base de datos: Online 🟢</p>
-    </div>
   </div>
-
 </div>
 
 <script src="app.js"></script>

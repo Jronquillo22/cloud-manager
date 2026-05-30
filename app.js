@@ -168,3 +168,57 @@ function responderCot(i) {
   localStorage.setItem("cot", JSON.stringify(cot));
   loadAdminData();
 }
+
+function showView(view) {
+  document.querySelectorAll(".view").forEach(v => v.classList.add("hidden"));
+  document.getElementById("userPanel").classList.add("hidden");
+  document.getElementById("adminPanel").classList.add("hidden");
+
+  if (role === "administrador") {
+    document.getElementById("adminPanel").classList.remove("hidden");
+  } else {
+    document.getElementById("userPanel").classList.remove("hidden");
+    loadUserResponses();
+  }
+}
+function loadAdmin() {
+  let users = JSON.parse(localStorage.getItem("users") || "[]");
+  let citas = JSON.parse(localStorage.getItem("citas") || "[]");
+  let cot = JSON.parse(localStorage.getItem("cot") || "[]");
+
+  userTable.innerHTML = users.map((u,i)=>`
+    <tr>
+      <td>${u.user}</td>
+      <td>${u.role}</td>
+      <td><button onclick="deleteUser(${i})">Eliminar</button></td>
+    </tr>
+  `).join("");
+
+  citaTable.innerHTML = citas.map((c,i)=>`
+    <tr>
+      <td>${c.servicio}</td>
+      <td>${c.fecha}</td>
+      <td>${c.estado || "pendiente"}</td>
+      <td>
+        <button onclick="aceptar(${i})">Aceptar</button>
+        <button onclick="rechazar(${i})">Rechazar</button>
+      </td>
+    </tr>
+  `).join("");
+
+  cotTable.innerHTML = cot.map((c,i)=>`
+    <tr>
+      <td>${c.servicio}</td>
+      <td>${c.detalle}</td>
+      <td>${c.respuesta || ""}</td>
+      <td><button onclick="responder(${i})">Responder</button></td>
+    </tr>
+  `).join("");
+}
+function loadUserResponses() {
+  let cot = JSON.parse(localStorage.getItem("cot") || "[]");
+
+  userResponses.innerHTML = cot.map(c =>
+    `<p>${c.servicio} - Respuesta: ${c.respuesta || "Pendiente"}</p>`
+  ).join("");
+}

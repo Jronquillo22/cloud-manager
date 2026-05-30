@@ -1,62 +1,94 @@
 body {
+  margin: 0;
   font-family: Arial;
-  background: #0f172a;
+  background: #0d1117;
   color: white;
-  text-align: center;
 }
 
-.box, .panel {
-  background: #1e293b;
+/* LOGIN */
+.center-box {
+  width: 320px;
+  margin: 100px auto;
+  background: #161b22;
   padding: 20px;
-  margin: 20px auto;
-  width: 400px;
-  border-radius: 12px;
+  border-radius: 10px;
+  text-align: center;
 }
 
 input, textarea {
   width: 90%;
   padding: 10px;
-  margin: 8px;
+  margin: 8px 0;
+  background: #0d1117;
+  border: 1px solid #30363d;
+  color: white;
+}
+
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  background: #161b22;
+  border-bottom: 1px solid #30363d;
+}
+
+.nav-buttons button {
+  margin-left: 10px;
+}
+
+/* CONTENT */
+.content {
+  padding: 20px;
+}
+
+/* GRID USER */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.card {
+  background: #161b22;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.card.full {
+  grid-column: span 2;
+}
+
+/* TABLES */
+.table-container {
+  margin-top: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+  background: #161b22;
+}
+
+th, td {
+  padding: 12px;
+  border: 1px solid #30363d;
+  text-align: center;
 }
 
 button {
-  padding: 10px;
-  margin: 5px;
-  background: #22c55e;
+  padding: 8px 12px;
+  background: #238636;
   border: none;
   color: white;
   cursor: pointer;
 }
 
 button:hover {
-  background: #16a34a;
-}
-
-.section {
-  margin-top: 15px;
-  padding: 10px;
-  background: #0f172a;
-  border-radius: 10px;
+  background: #2ea043;
 }
 
 .hidden {
   display: none;
-}
-
-header {
-  background: #1e293b;
-  padding: 15px;
-}
-
-.footer {
-  margin-top: 40px;
-  padding: 20px;
-  background: #0f172a;
-  border-top: 1px solid #334155;
-}
-
-.social a {
-  margin: 10px;
-  color: #22c55e;
-  text-decoration: none;
 }
