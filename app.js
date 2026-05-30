@@ -6,43 +6,56 @@ function setRole(r){
 }
 
 /* LOGIN */
-function login(){
-  let users = JSON.parse(localStorage.getItem("users")||"[]");
+function login() {
+  let user = document.getElementById("loginUser").value;
+  let pass = document.getElementById("loginPass").value;
 
-  let found = users.find(u =>
-    u.user === loginUser.value &&
-    u.pass === loginPass.value
-  );
-
-  if(!found){ alert("Error"); return; }
-
-  role = found.role;
-
-  loginBox.classList.add("hidden");
-  app.classList.remove("hidden");
-
-  showPanel("user");
-
-  registerActivity();
-}
-
-/* REGISTER */
-function register(){
-
-  if(!regUser.value || !regPass.value){
-    alert("Campos vacíos");
+  if (!user || !pass) {
+    alert("Completa los campos");
     return;
   }
 
-  let users = JSON.parse(localStorage.getItem("users")||"[]");
+  let users = JSON.parse(localStorage.getItem("users") || "[]");
+
+  let found = users.find(u =>
+    u.user === user && u.pass === pass
+  );
+
+  if (!found) {
+    alert("Credenciales incorrectas");
+    return;
+  }
+
+  role = found.role;
+
+  document.getElementById("loginBox").classList.add("hidden");
+  document.getElementById("registerBox").classList.add("hidden");
+  document.getElementById("app").classList.remove("hidden");
+
+  showPanel("user");
+}
+
+/* REGISTER */
+function register() {
+  let user = document.getElementById("regUser").value;
+  let pass = document.getElementById("regPass").value;
+
+  if (!user || !pass) {
+    alert("Completa todos los campos");
+    return;
+  }
+
+  let users = JSON.parse(localStorage.getItem("users") || "[]");
 
   users.push({
-    user: regUser.value,
-    pass: regPass.value,
+    user,
+    pass,
     role
   });
 
-  localStorage.setItem("users",JSON.stringify(users));
+  localStorage.setItem("users", JSON.stringify(users));
+
+  alert("Usuario creado");
 
   showLogin();
 }
