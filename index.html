@@ -20,16 +20,20 @@
 </div>
 
 <!-- REGISTER -->
-<div id="registerBox" class="center-box hidden">
-  <h2>Registro</h2>
-
-  <input id="regUser" placeholder="Usuario">
-  <input id="regPass" type="password" placeholder="Contraseña">
-
-  <div>
-    <button onclick="setRole('usuario')">Usuario</button>
-    <button onclick="setRole('administrador')">Administrador</button>
+<div class="form-group">
+    <label>Contraseña</label>
+    <input id="regPass" type="password" placeholder="Ingrese contraseña">
   </div>
+
+  <div class="form-group">
+    <label>Tipo de cuenta</label>
+    <div class="role-buttons">
+      <button type="button" onclick="setRole('usuario')">Usuario</button>
+      <button type="button" onclick="setRole('administrador')">Administrador</button>
+    </div>
+  </div>
+
+  <p id="roleSelected">Rol seleccionado: usuario</p>
 
   <button onclick="register()">Registrarse</button>
   <button onclick="showLogin()">Volver</button>
@@ -52,7 +56,7 @@
 
     <!-- USER PANEL -->
     <div id="userPanel" class="view hidden">
-      <h2>Panel de Usuario22</h2>
+      <h2>Panel de Usuario2</h2>
       
       <div class="grid">
 
