@@ -16,7 +16,7 @@ jobs:
         run: docker build -t jronquillo22/mi-app:latest .
 
       - name: Test básico
-        run: docker run jronquillo22/mi-app:latest echo "CI OK"
+        run: docker run jimmyr226/mi-app:latest echo "CI OK"
 
   cd:
     needs: ci
