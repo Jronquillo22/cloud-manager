@@ -2,141 +2,24 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>TechNova Services</title>
+  <title>Login Test</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- LOGIN -->
-<div id="loginBox" class="auth-container">
-  <div class="auth-card">
+<div id="loginBox" class="box">
+  <h2>LOGIN</h2>
 
-    <h2>Inicio de sesión</h2>
+  <input id="user" placeholder="Usuario">
+  <input id="pass" type="password" placeholder="Contraseña">
 
-    <input id="loginUser" placeholder="Usuario">
-    <input id="loginPass" type="password" placeholder="Contraseña">
-
-    <button onclick="login()">Ingresar</button>
-    <button onclick="showRegister()">Crear cuenta</button>
-
-  </div>
+  <button onclick="login()">Entrar</button>
 </div>
 
-<!-- REGISTER -->
-<div id="registerBox" class="auth-container hidden">
-  <div class="auth-card">
-
-    <h2>Registro</h2>
-
-    <input id="regUser" placeholder="Usuario">
-    <input id="regPass" type="password" placeholder="Contraseña">
-
-    <div class="role-buttons">
-      <button onclick="setRole('usuario')">Usuario</button>
-      <button onclick="setRole('administrador')">Administrador</button>
-    </div>
-
-    <p id="roleSelected">Rol: usuario</p>
-
-    <button onclick="register()">Registrarse</button>
-    <button onclick="showLogin()">Volver</button>
-
-  </div>
-</div>
-
-<!-- APP -->
 <div id="app" class="hidden">
-
-  <div class="navbar">
-    <div>TechNova Services</div>
-
-    <div>
-      <button onclick="showPanel('user')">Usuario</button>
-      <button onclick="showPanel('admin')">Admin</button>
-      <button onclick="showPanel('monitor')">Monitor</button>
-      <button onclick="logout()">Salir</button>
-    </div>
-  </div>
-
-  <div class="content">
-
-    <!-- USER -->
-    <div id="userPanel" class="panel hidden">
-
-      <h2>Panel Usuario</h2>
-
-      <div class="grid">
-
-        <div class="card">
-          <h3>Agendar cita</h3>
-
-          <input id="citaNombre" placeholder="Nombre">
-          <input id="citaEmail" placeholder="Correo">
-          <input id="citaTelefono" placeholder="Teléfono">
-
-          <select id="citaServicio">
-            <option>Soporte Técnico</option>
-            <option>Infraestructura Cloud</option>
-            <option>DevOps</option>
-            <option>Seguridad</option>
-          </select>
-
-          <input id="citaFecha" type="date">
-
-          <button onclick="guardarCita()">Enviar</button>
-        </div>
-
-        <div class="card">
-          <h3>Cotización</h3>
-
-          <select id="cotServicio">
-            <option>Soporte Técnico</option>
-            <option>Infraestructura Cloud</option>
-            <option>DevOps</option>
-            <option>Seguridad</option>
-          </select>
-
-          <input id="cotDetalle" placeholder="Detalle">
-
-          <button onclick="guardarCotizacion()">Enviar</button>
-        </div>
-
-        <div class="card full">
-          <h3>Respuestas</h3>
-          <div id="userResponses"></div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- ADMIN -->
-    <div id="adminPanel" class="panel hidden">
-
-      <h2>Panel Administrador</h2>
-
-      <h3>Citas</h3>
-      <table>
-        <tbody id="citaTable"></tbody>
-      </table>
-
-      <h3>Cotizaciones</h3>
-      <table>
-        <tbody id="cotTable"></tbody>
-      </table>
-
-    </div>
-
-    <!-- MONITOR -->
-    <div id="monitorPanel" class="panel hidden">
-
-      <h2>Monitor del Sistema</h2>
-
-      <canvas id="chart" width="400" height="200"></canvas>
-
-    </div>
-
-  </div>
+  <h2>BIENVENIDO</h2>
+  <button onclick="logout()">Salir</button>
 </div>
 
 <script src="app.js"></script>
