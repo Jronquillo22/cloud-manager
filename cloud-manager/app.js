@@ -1,51 +1,51 @@
-let role = "usuario";
+/* =========================
+   VISTAS
+========================= */
 
-/* ELEMENTOS */
-const loginBox = document.getElementById("loginBox");
-const registerBox = document.getElementById("registerBox");
-const app = document.getElementById("app");
-
-const roleSelected = document.getElementById("roleSelected");
-
-const loginUser = document.getElementById("loginUser");
-const loginPass = document.getElementById("loginPass");
-
-const regUser = document.getElementById("regUser");
-const regPass = document.getElementById("regPass");
-
-/* INICIO: FORZAR LOGIN */
-window.onload = function () {
-  showLogin();
-};
-
-/* LOGIN / REGISTER */
-function setRole(r){
-  role = r;
-  roleSelected.innerText = "Rol: " + r;
+function showLogin() {
+  document.getElementById("loginView").classList.remove("hidden");
+  document.getElementById("registerView").classList.add("hidden");
+  document.getElementById("appView").classList.add("hidden");
 }
 
-function showRegister(){
-  loginBox.classList.add("hidden");
-  registerBox.classList.remove("hidden");
+function showRegister() {
+  document.getElementById("loginView").classList.add("hidden");
+  document.getElementById("registerView").classList.remove("hidden");
+  document.getElementById("appView").classList.add("hidden");
 }
 
-function showLogin(){
-  registerBox.classList.add("hidden");
-  loginBox.classList.remove("hidden");
+function showApp(user) {
+  document.getElementById("loginView").classList.add("hidden");
+  document.getElementById("registerView").classList.add("hidden");
+  document.getElementById("appView").classList.remove("hidden");
+
+  document.getElementById("welcome").innerText =
+    "Bienvenido " + user.user + " (" + user.role + ")";
 }
 
-/* REGISTER */
-function register(){
+/* =========================
+   REGISTRO
+========================= */
 
-  let user = regUser.value;
-  let pass = regPass.value;
+function register() {
 
-  if(!user || !pass){
-    alert("Completa los campos");
+  const user = document.getElementById("regUser").value;
+  const pass = document.getElementById("regPass").value;
+  const role = document.getElementById("regRole").value;
+
+  if (!user || !pass) {
+    alert("Completa todos los campos");
     return;
   }
 
-  let users = JSON.parse(localStorage.getItem("users") || "[]");
+  let users = JSON.parse(localStorage.getItem("users")) || [];
+
+  let exists = users.some(u => u.user === user);
+
+  if (exists) {
+    alert("El usuario ya existe");
+    return;
+  }
 
   users.push({ user, pass, role });
 
@@ -56,128 +56,37 @@ function register(){
   showLogin();
 }
 
-/* LOGIN */
-function login(){
+/* =========================
+   LOGIN
+========================= */
 
-  let user = loginUser.value;
-  let pass = loginPass.value;
+function login() {
 
-  if(!user || !pass){
-    alert("Completa campos");
-    return;
-  }
+  const user = document.getElementById("loginUser").value;
+  const pass = document.getElementById("loginPass").value;
 
-  let users = JSON.parse(localStorage.getItem("users") || "[]");
+  let users = JSON.parse(localStorage.getItem("users")) || [];
 
   let found = users.find(u => u.user === user && u.pass === pass);
 
-  if(!found){
-    alert("Error login");
+  if (!found) {
+    alert("Credenciales incorrectas");
     return;
   }
 
-  role = found.role;
-
-  loginBox.classList.add("hidden");
-  registerBox.classList.add("hidden");
-  app.classList.remove("hidden");
-
-  showPanel("user");
+  showApp(found);
 }
 
-/* PANELS */
-function showPanel(p){
+/* =========================
+   LOGOUT
+========================= */
 
-  document.getElementById("userPanel").classList.add("hidden");
-  document.getElementById("adminPanel").classList.add("hidden");
-  document.getElementById("monitorPanel").classList.add("hidden");
-
-  if(p==="user") document.getElementById("userPanel").classList.remove("hidden");
-  if(p==="admin") loadAdmin(), document.getElementById("adminPanel").classList.remove("hidden");
-  if(p==="monitor") document.getElementById("monitorPanel").classList.remove("hidden"), drawChart();
+function logout() {
+  showLogin();
 }
 
-/* USER */
-function guardarCita(){
+/* =========================
+   INICIO AUTOMÁTICO
+========================= */
 
-  let citas = JSON.parse(localStorage.getItem("citas") || "[]");
-
-  citas.push({
-    nombre: citaNombre.value,
-    email: citaEmail.value,
-    telefono: citaTelefono.value,
-    servicio: citaServicio.value,
-    fecha: citaFecha.value,
-    estado: "pendiente"
-  });
-
-  localStorage.setItem("citas", JSON.stringify(citas));
-}
-
-function guardarCotizacion(){
-
-  let cot = JSON.parse(localStorage.getItem("cot") || "[]");
-
-  cot.push({
-    servicio: cotServicio.value,
-    detalle: cotDetalle.value,
-    respuesta: ""
-  });
-
-  localStorage.setItem("cot", JSON.stringify(cot));
-}
-
-/* ADMIN */
-function loadAdmin(){
-
-  let citas = JSON.parse(localStorage.getItem("citas") || "[]");
-  let cot = JSON.parse(localStorage.getItem("cot") || "[]");
-
-  citaTable.innerHTML = citas.map((c,i)=>
-  `<tr>
-    <td>${c.nombre}</td>
-    <td>${c.servicio}</td>
-    <td>${c.estado}</td>
-    <td>
-      <button onclick="estado(${i},'aceptada')">✔</button>
-      <button onclick="estado(${i},'rechazada')">✖</button>
-      <button onclick="estado(${i},'reagendada')">🔁</button>
-    </td>
-  </tr>`).join("");
-
-  cotTable.innerHTML = cot.map((c,i)=>
-  `<tr>
-    <td>${c.servicio}</td>
-    <td>${c.detalle}</td>
-    <td>${c.respuesta}</td>
-    <td><button onclick="responder(${i})">Responder</button></td>
-  </tr>`).join("");
-}
-
-function estado(i,est){
-  let citas = JSON.parse(localStorage.getItem("citas"));
-  citas[i].estado = est;
-  localStorage.setItem("citas", JSON.stringify(citas));
-  loadAdmin();
-}
-
-function responder(i){
-  let cot = JSON.parse(localStorage.getItem("cot"));
-  cot[i].respuesta = prompt("Respuesta:");
-  localStorage.setItem("cot", JSON.stringify(cot));
-  loadAdmin();
-}
-
-/* MONITOR */
-function drawChart(){
-  let ctx = document.getElementById("chart").getContext("2d");
-  let citas = JSON.parse(localStorage.getItem("citas") || "[]");
-
-  ctx.clearRect(0,0,400,200);
-  ctx.fillText("Citas: " + citas.length, 20, 50);
-}
-
-/* LOGOUT */
-function logout(){
-  location.reload();
-}
+window.onload = showLogin;

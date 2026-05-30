@@ -5,57 +5,47 @@ body {
   color: white;
 }
 
-.hidden { display:none; }
-
-.auth-container {
-  position: fixed;
-  inset: 0;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+.hidden {
+  display: none;
 }
 
-.auth-card {
-  width: 350px;
-  background:#161b22;
-  padding:25px;
-  border-radius:10px;
-  text-align:center;
+.view {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box {
+  width: 320px;
+  background: #161b22;
+  padding: 25px;
+  border-radius: 10px;
+  text-align: center;
 }
 
 input, select {
   width: 100%;
-  margin: 5px 0;
-  padding: 8px;
-}
-
-.navbar {
-  display:flex;
-  justify-content:space-between;
-  padding:15px;
-  background:#161b22;
-}
-
-.grid {
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:20px;
-}
-
-.card {
-  background:#161b22;
-  padding:15px;
-  border-radius:10px;
-}
-
-.card.full {
-  grid-column: span 2;
+  margin: 8px 0;
+  padding: 10px;
 }
 
 button {
-  background:#238636;
-  color:white;
-  border:none;
-  padding:8px;
-  margin-top:5px;
+  background: #238636;
+  color: white;
+  border: none;
+  padding: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  background: #161b22;
+}
+
+.content {
+  padding: 20px;
 }
