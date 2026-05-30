@@ -33,16 +33,12 @@ input, textarea {
   border-bottom: 1px solid #30363d;
 }
 
-.nav-buttons button {
-  margin-left: 10px;
-}
-
 /* CONTENT */
 .content {
   padding: 20px;
 }
 
-/* GRID USER */
+/* GRID */
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -60,19 +56,15 @@ input, textarea {
 }
 
 /* TABLES */
-.table-container {
-  margin-top: 20px;
-}
-
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   background: #161b22;
 }
 
 th, td {
-  padding: 12px;
+  padding: 10px;
   border: 1px solid #30363d;
   text-align: center;
 }

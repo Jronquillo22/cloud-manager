@@ -1,8 +1,9 @@
 let role = "usuario";
 
+/* ===== LOGIN / REGISTER ===== */
+
 function setRole(r) {
   role = r;
-  document.getElementById("roleSelected").innerText = "Rol: " + r;
 }
 
 function showRegister() {
@@ -43,93 +44,130 @@ function login() {
     return;
   }
 
-  // OCULTAR LOGIN
   document.getElementById("loginBox").classList.add("hidden");
-
-  // MOSTRAR APP
   document.getElementById("app").classList.remove("hidden");
 
   role = found.role;
 
-  if (found.role === "administrador") {
+  if (role === "administrador") {
     document.getElementById("adminPanel").classList.remove("hidden");
-    loadAdmin(); // IMPORTANTE
+    loadAdmin();
   } else {
     document.getElementById("userPanel").classList.remove("hidden");
     loadUserResponses();
   }
 }
 
-/* ===== USUARIO ===== */
+/* ===== USER ===== */
+
 function guardarCita() {
   let citas = JSON.parse(localStorage.getItem("citas") || "[]");
+
   citas.push({
     servicio: citaServicio.value,
-    fecha: citaFecha.value
+    fecha: citaFecha.value,
+    estado: "pendiente"
   });
+
   localStorage.setItem("citas", JSON.stringify(citas));
   alert("Cita enviada");
 }
 
 function guardarCotizacion() {
   let cot = JSON.parse(localStorage.getItem("cot") || "[]");
+
   cot.push({
     servicio: cotServicio.value,
-    detalle: cotDetalle.value
+    detalle: cotDetalle.value,
+    respuesta: ""
   });
+
   localStorage.setItem("cot", JSON.stringify(cot));
   alert("Cotización enviada");
 }
 
 /* ===== ADMIN ===== */
-function logout() {
-  location.reload();
-}
 
-function addUser(role) {
+function loadAdmin() {
   let users = JSON.parse(localStorage.getItem("users") || "[]");
-
-  users.push({
-    user: newUser.value,
-    pass: newPass.value,
-    role: role
-  });
-
-  localStorage.setItem("users", JSON.stringify(users));
-  loadAdminData();
-}
-
-function deleteUser(index) {
-  let users = JSON.parse(localStorage.getItem("users") || "[]");
-  users.splice(index, 1);
-  localStorage.setItem("users", JSON.stringify(users));
-  loadAdminData();
-}
-
-
-
-function responderCot(i) {
+  let citas = JSON.parse(localStorage.getItem("citas") || "[]");
   let cot = JSON.parse(localStorage.getItem("cot") || "[]");
 
-  let respuesta = prompt("Respuesta de cotización:");
-  cot[i].respuesta = respuesta;
+  userTable.innerHTML = users.map((u, i) =>
+    `<tr>
+      <td>${u.user}</td>
+      <td>${u.role}</td>
+      <td><button onclick="deleteUser(${i})">Eliminar</button></td>
+    </tr>`
+  ).join("");
 
-  localStorage.setItem("cot", JSON.stringify(cot));
-  loadAdminData();
+  citaTable.innerHTML = citas.map((c, i) =>
+    `<tr>
+      <td>${c.servicio}</td>
+      <td>${c.fecha}</td>
+      <td>${c.estado}</td>
+      <td>
+        <button onclick="aceptar(${i})">Aceptar</button>
+        <button onclick="rechazar(${i})">Rechazar</button>
+      </td>
+    </tr>`
+  ).join("");
+
+  cotTable.innerHTML = cot.map((c, i) =>
+    `<tr>
+      <td>${c.servicio}</td>
+      <td>${c.detalle}</td>
+      <td>${c.respuesta}</td>
+      <td><button onclick="responder(${i})">Responder</button></td>
+    </tr>`
+  ).join("");
 }
 
-function responderCot(i) {
+/* ===== ACCIONES ADMIN ===== */
+
+function deleteUser(i) {
+  let users = JSON.parse(localStorage.getItem("users") || "[]");
+  users.splice(i, 1);
+  localStorage.setItem("users", JSON.stringify(users));
+  loadAdmin();
+}
+
+function aceptar(i) {
+  let citas = JSON.parse(localStorage.getItem("citas") || "[]");
+  citas[i].estado = "aceptada";
+  localStorage.setItem("citas", JSON.stringify(citas));
+  loadAdmin();
+}
+
+function rechazar(i) {
+  let citas = JSON.parse(localStorage.getItem("citas") || "[]");
+  citas[i].estado = "rechazada";
+  localStorage.setItem("citas", JSON.stringify(citas));
+  loadAdmin();
+}
+
+function responder(i) {
   let cot = JSON.parse(localStorage.getItem("cot") || "[]");
 
-  let respuesta = prompt("Respuesta de cotización:");
-  cot[i].respuesta = respuesta;
-
+  cot[i].respuesta = prompt("Respuesta:");
   localStorage.setItem("cot", JSON.stringify(cot));
-  loadAdminData();
+
+  loadAdmin();
 }
 
-function showView(view) {
-  document.querySelectorAll(".view").forEach(v => v.classList.add("hidden"));
+/* ===== USER RESPONSES ===== */
+
+function loadUserResponses() {
+  let cot = JSON.parse(localStorage.getItem("cot") || "[]");
+
+  userResponses.innerHTML = cot.map(c =>
+    `<p>${c.servicio} → ${c.respuesta || "Pendiente"}</p>`
+  ).join("");
+}
+
+/* ===== NAV ===== */
+
+function showView(v) {
   document.getElementById("userPanel").classList.add("hidden");
   document.getElementById("adminPanel").classList.add("hidden");
 
@@ -140,44 +178,7 @@ function showView(view) {
     loadUserResponses();
   }
 }
-function loadAdmin() {
-  let users = JSON.parse(localStorage.getItem("users") || "[]");
-  let citas = JSON.parse(localStorage.getItem("citas") || "[]");
-  let cot = JSON.parse(localStorage.getItem("cot") || "[]");
 
-  userTable.innerHTML = users.map((u,i)=>`
-    <tr>
-      <td>${u.user}</td>
-      <td>${u.role}</td>
-      <td><button onclick="deleteUser(${i})">Eliminar</button></td>
-    </tr>
-  `).join("");
-
-  citaTable.innerHTML = citas.map((c,i)=>`
-    <tr>
-      <td>${c.servicio}</td>
-      <td>${c.fecha}</td>
-      <td>${c.estado || "pendiente"}</td>
-      <td>
-        <button onclick="aceptar(${i})">Aceptar</button>
-        <button onclick="rechazar(${i})">Rechazar</button>
-      </td>
-    </tr>
-  `).join("");
-
-  cotTable.innerHTML = cot.map((c,i)=>`
-    <tr>
-      <td>${c.servicio}</td>
-      <td>${c.detalle}</td>
-      <td>${c.respuesta || ""}</td>
-      <td><button onclick="responder(${i})">Responder</button></td>
-    </tr>
-  `).join("");
-}
-function loadUserResponses() {
-  let cot = JSON.parse(localStorage.getItem("cot") || "[]");
-
-  userResponses.innerHTML = cot.map(c =>
-    `<p>${c.servicio} - Respuesta: ${c.respuesta || "Pendiente"}</p>`
-  ).join("");
+function logout() {
+  location.reload();
 }

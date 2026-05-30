@@ -26,7 +26,7 @@
   <input id="regUser" placeholder="Usuario">
   <input id="regPass" type="password" placeholder="Contraseña">
 
-  <div class="role-buttons">
+  <div>
     <button onclick="setRole('usuario')">Usuario</button>
     <button onclick="setRole('administrador')">Administrador</button>
   </div>
@@ -43,95 +43,68 @@
     <div>TechNova Services</div>
 
     <div class="nav-buttons">
-      <button onclick="showView('dashboard')">Dashboard</button>
-      <button onclick="showView('citas')">Citas</button>
-      <button onclick="showView('cotizaciones')">Cotizaciones</button>
+      <button onclick="showView('user')">Panel</button>
       <button onclick="logout()">Salir</button>
     </div>
   </div>
 
-  <!-- CONTENIDO -->
   <div class="content">
 
-    <!-- USER -->
+    <!-- USER PANEL -->
     <div id="userPanel" class="view hidden">
       <h2>Panel de Usuario</h2>
 
       <div class="grid">
+
         <div class="card">
-          <h3>Solicitar cita</h3>
+          <h3>Agendar cita</h3>
           <input id="citaServicio" placeholder="Servicio">
           <input id="citaFecha" type="date">
           <button onclick="guardarCita()">Enviar</button>
         </div>
-        <div id="userPanel" class="view hidden"></div>
-        <div class="card full">
-        <h3>Respuestas</h3>
-        <div id="userResponses"></div>
-        </div>
-
 
         <div class="card">
-          <h3>Solicitar cotización</h3>
+          <h3>Cotización</h3>
           <input id="cotServicio" placeholder="Servicio">
           <textarea id="cotDetalle" placeholder="Detalle"></textarea>
           <button onclick="guardarCotizacion()">Enviar</button>
         </div>
-        >
 
         <div class="card full">
           <h3>Respuestas</h3>
           <div id="userResponses"></div>
         </div>
+
       </div>
     </div>
 
-    <!-- ADMIN -->
+    <!-- ADMIN PANEL -->
     <div id="adminPanel" class="view hidden">
 
       <h2>Panel Administrador</h2>
 
-      <div class="table-container">
+      <h3>Usuarios</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Usuario</th>
+            <th>Rol</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody id="userTable"></tbody>
+      </table>
 
-        <h3>Usuarios</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Usuario</th>
-              <th>Rol</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody id="userTable"></tbody>
-        </table>
+      <h3>Citas</h3>
+      <table>
+        <tbody id="citaTable"></tbody>
+      </table>
 
-        <h3>Citas</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Servicio</th>
-              <th>Fecha</th>
-              <th>Estado</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody id="citaTable"></tbody>
-        </table>
+      <h3>Cotizaciones</h3>
+      <table>
+        <tbody id="cotTable"></tbody>
+      </table>
 
-        <h3>Cotizaciones</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Servicio</th>
-              <th>Detalle</th>
-              <th>Respuesta</th>
-              <th>Acción</th>
-            </tr>
-          </thead>
-          <tbody id="cotTable"></tbody>
-        </table>
-
-      </div>
     </div>
 
   </div>
