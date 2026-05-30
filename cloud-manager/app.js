@@ -1,5 +1,23 @@
 let role = "usuario";
 
+/* ELEMENTOS */
+const loginBox = document.getElementById("loginBox");
+const registerBox = document.getElementById("registerBox");
+const app = document.getElementById("app");
+
+const roleSelected = document.getElementById("roleSelected");
+
+const loginUser = document.getElementById("loginUser");
+const loginPass = document.getElementById("loginPass");
+
+const regUser = document.getElementById("regUser");
+const regPass = document.getElementById("regPass");
+
+/* INICIO: FORZAR LOGIN */
+window.onload = function () {
+  showLogin();
+};
+
 /* LOGIN / REGISTER */
 function setRole(r){
   role = r;
@@ -27,9 +45,9 @@ function register(){
     return;
   }
 
-  let users = JSON.parse(localStorage.getItem("users")||"[]");
+  let users = JSON.parse(localStorage.getItem("users") || "[]");
 
-  users.push({user, pass, role});
+  users.push({ user, pass, role });
 
   localStorage.setItem("users", JSON.stringify(users));
 
@@ -49,7 +67,7 @@ function login(){
     return;
   }
 
-  let users = JSON.parse(localStorage.getItem("users")||"[]");
+  let users = JSON.parse(localStorage.getItem("users") || "[]");
 
   let found = users.find(u => u.user === user && u.pass === pass);
 
@@ -70,50 +88,50 @@ function login(){
 /* PANELS */
 function showPanel(p){
 
-  userPanel.classList.add("hidden");
-  adminPanel.classList.add("hidden");
-  monitorPanel.classList.add("hidden");
+  document.getElementById("userPanel").classList.add("hidden");
+  document.getElementById("adminPanel").classList.add("hidden");
+  document.getElementById("monitorPanel").classList.add("hidden");
 
-  if(p==="user") userPanel.classList.remove("hidden");
-  if(p==="admin") loadAdmin(), adminPanel.classList.remove("hidden");
-  if(p==="monitor") monitorPanel.classList.remove("hidden"), drawChart();
+  if(p==="user") document.getElementById("userPanel").classList.remove("hidden");
+  if(p==="admin") loadAdmin(), document.getElementById("adminPanel").classList.remove("hidden");
+  if(p==="monitor") document.getElementById("monitorPanel").classList.remove("hidden"), drawChart();
 }
 
 /* USER */
 function guardarCita(){
 
-  let citas = JSON.parse(localStorage.getItem("citas")||"[]");
+  let citas = JSON.parse(localStorage.getItem("citas") || "[]");
 
   citas.push({
-    nombre:citaNombre.value,
-    email:citaEmail.value,
-    telefono:citaTelefono.value,
-    servicio:citaServicio.value,
-    fecha:citaFecha.value,
-    estado:"pendiente"
+    nombre: citaNombre.value,
+    email: citaEmail.value,
+    telefono: citaTelefono.value,
+    servicio: citaServicio.value,
+    fecha: citaFecha.value,
+    estado: "pendiente"
   });
 
-  localStorage.setItem("citas",JSON.stringify(citas));
+  localStorage.setItem("citas", JSON.stringify(citas));
 }
 
 function guardarCotizacion(){
 
-  let cot = JSON.parse(localStorage.getItem("cot")||"[]");
+  let cot = JSON.parse(localStorage.getItem("cot") || "[]");
 
   cot.push({
-    servicio:cotServicio.value,
-    detalle:cotDetalle.value,
-    respuesta:""
+    servicio: cotServicio.value,
+    detalle: cotDetalle.value,
+    respuesta: ""
   });
 
-  localStorage.setItem("cot",JSON.stringify(cot));
+  localStorage.setItem("cot", JSON.stringify(cot));
 }
 
 /* ADMIN */
 function loadAdmin(){
 
-  let citas = JSON.parse(localStorage.getItem("citas")||"[]");
-  let cot = JSON.parse(localStorage.getItem("cot")||"[]");
+  let citas = JSON.parse(localStorage.getItem("citas") || "[]");
+  let cot = JSON.parse(localStorage.getItem("cot") || "[]");
 
   citaTable.innerHTML = citas.map((c,i)=>
   `<tr>
@@ -139,24 +157,23 @@ function loadAdmin(){
 function estado(i,est){
   let citas = JSON.parse(localStorage.getItem("citas"));
   citas[i].estado = est;
-  localStorage.setItem("citas",JSON.stringify(citas));
+  localStorage.setItem("citas", JSON.stringify(citas));
   loadAdmin();
 }
 
 function responder(i){
   let cot = JSON.parse(localStorage.getItem("cot"));
   cot[i].respuesta = prompt("Respuesta:");
-  localStorage.setItem("cot",JSON.stringify(cot));
+  localStorage.setItem("cot", JSON.stringify(cot));
   loadAdmin();
 }
 
 /* MONITOR */
 function drawChart(){
   let ctx = document.getElementById("chart").getContext("2d");
-  let citas = JSON.parse(localStorage.getItem("citas")||"[]");
+  let citas = JSON.parse(localStorage.getItem("citas") || "[]");
 
   ctx.clearRect(0,0,400,200);
-  ctx.fillStyle="green";
   ctx.fillText("Citas: " + citas.length, 20, 50);
 }
 
