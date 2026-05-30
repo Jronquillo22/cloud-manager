@@ -1,0 +1,59 @@
+name: CI-CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t jimmyr226/mi-app:latest .
+
+      - name: Test básico
+        run: docker run jimmyr226/mi-app:latest echo "CI OK"
+
+  cd:
+    needs: ci
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v4
+
+      - name: Login Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_PASS }}
+
+      - name: Build image
+        run: docker build -t jimmyr226/mi-app:latest .
+
+      - name: Push image
+        run: docker push jimmyr226/mi-app:latest
+  deploy:
+    needs: cd
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ec2-user
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            cd /home/ec2-user/cloud-manager
+            git pull
+
+            docker pull jimmyr226/mi-app:latest
+            docker stop mi-app || true
+            docker rm mi-app || true
+            docker run -d --name mi-app -p 80:80 jimmyr226/mi-app:latest
+        

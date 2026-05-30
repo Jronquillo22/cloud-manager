@@ -1,0 +1,72 @@
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #0d1117;
+  color: white;
+}
+
+.hidden { display:none; }
+
+.auth-container {
+  position: fixed;
+  inset: 0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.auth-card {
+  width: 350px;
+  background:#161b22;
+  padding:25px;
+  border-radius:10px;
+  text-align:center;
+}
+
+input, select {
+  width: 100%;
+  margin: 5px 0;
+  padding: 8px;
+}
+
+.role-buttons button {
+  width: 48%;
+  margin: 5px 1%;
+}
+
+.navbar {
+  display:flex;
+  justify-content:space-between;
+  padding:15px;
+  background:#161b22;
+}
+
+.grid {
+  display:grid;
+  grid-template-columns: repeat(2,1fr);
+  gap:20px;
+}
+
+.card {
+  background:#161b22;
+  padding:15px;
+  border-radius:10px;
+}
+
+.card.full {
+  grid-column: span 2;
+}
+
+table {
+  width:100%;
+  background:#161b22;
+  margin-bottom:20px;
+}
+
+button {
+  background:#238636;
+  color:white;
+  border:none;
+  padding:8px;
+  margin-top:5px;
+}
