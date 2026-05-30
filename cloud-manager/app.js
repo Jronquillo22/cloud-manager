@@ -1,3 +1,12 @@
+
+function init() {
+  document.getElementById("loginBox").classList.remove("hidden");
+  document.getElementById("registerBox").classList.add("hidden");
+  document.getElementById("app").classList.add("hidden");
+}
+
+window.onload = init;
+
 let role = "usuario";
 
 /* helpers */
@@ -89,7 +98,7 @@ function showView() {
   }
 }
 
-/* USER */
+USER 
 function guardarCita() {
   const citaServicio = $("citaServicio");
   const citaFecha = $("citaFecha");
@@ -153,10 +162,3 @@ function logout() {
   location.reload();
 }
 
-function init() {
-  document.getElementById("loginBox").classList.remove("hidden");
-  document.getElementById("registerBox").classList.add("hidden");
-  document.getElementById("app").classList.add("hidden");
-}
-
-window.onload = init;
