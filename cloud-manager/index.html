@@ -9,41 +9,132 @@
 <body>
 
 <!-- LOGIN -->
-<section id="loginView" class="view">
+<div id="loginBox" class="auth-container">
+  <div class="auth-card">
 
-  <div class="box">
+    <h2>Inicio de sesión</h2>
 
-    <h2>Iniciar Sesión</h2>
+    <div class="form-group">
+      <label>Usuario</label>
+      <input id="loginUser" placeholder="Usuario">
+    </div>
 
-    <input id="loginUser" placeholder="Usuario">
-    <input id="loginPass" type="password" placeholder="Contraseña">
+    <div class="form-group">
+      <label>Contraseña</label>
+      <input id="loginPass" type="password" placeholder="Contraseña">
+    </div>
 
-    <button onclick="login()">Entrar</button>
-
-    <p>
-      ¿No tienes cuenta?
-      <button onclick="showRegister()">Crear cuenta</button>
-    </p>
+    <button onclick="login()">Ingresar</button>
+    <button onclick="showRegister()">Crear cuenta</button>
 
   </div>
-
-</section>
+</div>
 
 <!-- REGISTER -->
-<
+<div id="registerBox" class="auth-container hidden">
+  <div class="auth-card">
+
+    <h2>Registro</h2>
+
+    <div class="form-group">
+      <label>Usuario</label>
+      <input id="regUser" placeholder="Usuario">
+    </div>
+
+    <div class="form-group">
+      <label>Contraseña</label>
+      <input id="regPass" type="password" placeholder="Contraseña">
+    </div>
+
+    <div class="form-group">
+      <label>Tipo de cuenta</label>
+
+      <div class="role-buttons">
+        <button type="button" onclick="setRole('usuario')">Usuario</button>
+        <button type="button" onclick="setRole('administrador')">Administrador</button>
+      </div>
+    </div>
+
+    <p id="roleSelected">Rol seleccionado: usuario</p>
+
+    <button onclick="register()">Registrarse</button>
+    <button onclick="showLogin()">Volver</button>
+
+  </div>
+</div>
+
 <!-- APP -->
-<section id="appView" class="hidden">
+<div id="app" class="hidden">
 
   <div class="navbar">
-    <h3>TechNova Services</h3>
-    <button onclick="logout()">Salir</button>
+    <div>TechNova Services</div>
+
+    <div class="nav-buttons">
+      <button onclick="showView()">Panel</button>
+      <button onclick="logout()">Salir</button>
+    </div>
   </div>
 
   <div class="content">
-    <h2 id="welcome"></h2>
-  </div>
 
-</section>
+    <!-- USER -->
+    <div id="userPanel" class="view hidden">
+      <h2>Panel de Usuario</h2>
+
+      <div class="grid">
+
+        <div class="card">
+          <h3>Agendar cita</h3>
+          <input id="citaServicio" placeholder="Servicio">
+          <input id="citaFecha" type="date">
+          <button onclick="guardarCita()">Enviar</button>
+        </div>
+
+        <div class="card">
+          <h3>Cotización</h3>
+
+          <select id="cotServicio">
+            <option>Infraestructura Cloud</option>
+            <option>Soporte Técnico</option>
+            <option>Seguridad Informática</option>
+            <option>DevOps</option>
+          </select>
+
+          <input id="cotDetalle" placeholder="Detalle">
+          <button onclick="guardarCotizacion()">Enviar</button>
+        </div>
+
+        <div class="card full">
+          <h3>Respuestas</h3>
+          <div id="userResponses"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ADMIN -->
+    <div id="adminPanel" class="view hidden">
+      <h2>Panel Administrador</h2>
+
+      <h3>Usuarios</h3>
+      <table>
+        <tbody id="userTable"></tbody>
+      </table>
+
+      <h3>Citas</h3>
+      <table>
+        <tbody id="citaTable"></tbody>
+      </table>
+
+      <h3>Cotizaciones</h3>
+      <table>
+        <tbody id="cotTable"></tbody>
+      </table>
+
+    </div>
+
+  </div>
+</div>
 
 <script src="app.js"></script>
 </body>
