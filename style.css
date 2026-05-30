@@ -12,32 +12,50 @@ body {
 .box {
   background: #1e293b;
   padding: 20px;
-  width: 300px;
+  width: 320px;
   margin: auto;
-  border-radius: 10px;
+  border-radius: 12px;
 }
 
-input, select {
+input {
   width: 90%;
   padding: 10px;
   margin: 10px 0;
 }
 
-button {
+.btn {
+  width: 95%;
   padding: 10px;
-  width: 100%;
+  margin: 8px 0;
   background: #22c55e;
   border: none;
   color: white;
   cursor: pointer;
 }
 
-button:hover {
+.btn-secondary {
+  width: 95%;
+  padding: 10px;
+  background: #334155;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.btn:hover {
   background: #16a34a;
 }
 
-.hidden {
-  display: none;
+.btn-secondary:hover {
+  background: #475569;
+}
+
+.role-box button {
+  margin: 5px;
+  padding: 8px;
+  background: #334155;
+  color: white;
+  border: none;
 }
 
 .panel {
@@ -48,4 +66,8 @@ button:hover {
   width: 60%;
   margin-left: auto;
   margin-right: auto;
+}
+
+.hidden {
+  display: none;
 }

@@ -13,51 +13,57 @@
   <!-- LOGIN -->
   <div id="loginBox" class="box">
     <h2>🔐 Login</h2>
+
     <input type="text" id="loginUser" placeholder="Usuario">
     <input type="password" id="loginPass" placeholder="Contraseña">
-    <button onclick="login()">Entrar</button>
-    <p onclick="showRegister()">Crear cuenta</p>
+
+    <button class="btn" onclick="login()">Entrar</button>
+
+    <button class="btn-secondary" onclick="showRegister()">Crear cuenta</button>
   </div>
 
   <!-- REGISTER -->
   <div id="registerBox" class="box hidden">
     <h2>📝 Registro</h2>
+
     <input type="text" id="regUser" placeholder="Usuario">
     <input type="password" id="regPass" placeholder="Contraseña">
 
-    <select id="regRole">
-      <option value="user">Usuario</option>
-      <option value="admin">Admin</option>
-    </select>
+    <div class="role-box">
+      <button onclick="setRole('user')">Usuario</button>
+      <button onclick="setRole('admin')">Admin</button>
+    </div>
 
-    <button onclick="register()">Registrarse</button>
-    <p onclick="showLogin()">Ya tengo cuenta</p>
+    <p id="roleSelected">Rol: Usuario</p>
+
+    <button class="btn" onclick="register()">Registrarse</button>
+    <button class="btn-secondary" onclick="showLogin()">Volver</button>
   </div>
 
   <!-- DASHBOARD -->
   <div id="dashboard" class="hidden">
     <h1>🚀 Fuego Energy Cloud Dashboard</h1>
 
+    <button onclick="logout()">Cerrar sesión</button>
+
     <div id="adminPanel" class="panel hidden">
       <h2>🛠️ Panel Admin</h2>
-      <p>Gestión de infraestructura AWS</p>
-      <ul>
-        <li>EC2: Activo 🟢</li>
-        <li>Docker: Running 🟢</li>
-        <li>CI/CD: Enabled 🟢</li>
-      </ul>
+      <p>Gestión de usuarios del sistema</p>
+
+      <h3>👥 Usuarios registrados</h3>
+      <ul id="userList"></ul>
     </div>
 
     <div id="userPanel" class="panel hidden">
       <h2>👤 Panel Usuario</h2>
-      <p>Acceso a sistema de monitoreo</p>
+      <p>Monitoreo del sistema cloud</p>
       <ul>
-        <li>Estado sistema: Online 🟢</li>
-        <li>Servicios: Estables 🟢</li>
+        <li>EC2: Activo 🟢</li>
+        <li>Docker: Running 🟢</li>
+        <li>CI/CD: OK 🟢</li>
       </ul>
     </div>
 
-    <button onclick="logout()">Cerrar sesión</button>
   </div>
 
 </div>
