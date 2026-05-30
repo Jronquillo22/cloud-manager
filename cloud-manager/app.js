@@ -1,11 +1,5 @@
 
-function init() {
-  document.getElementById("loginBox").classList.remove("hidden");
-  document.getElementById("registerBox").classList.add("hidden");
-  document.getElementById("app").classList.add("hidden");
-}
 
-window.onload = init;
 
 let role = "usuario";
 
@@ -157,8 +151,17 @@ function loadUser() {
     .join("");
 }
 
-/* LOGOUT */
 function logout() {
-  location.reload();
+  forceLogin();
+  location.reload(); // opcional, pero asegura reset total
 }
+
+function forceLogin() {
+  document.getElementById("loginBox").classList.remove("hidden");
+  document.getElementById("registerBox").classList.add("hidden");
+  document.getElementById("app").classList.add("hidden");
+}
+
+window.onload = forceLogin;
+
 
