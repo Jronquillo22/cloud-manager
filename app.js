@@ -182,3 +182,57 @@ function showView(v) {
 function logout() {
   location.reload();
 }
+
+function register() {
+  if (!regUser.value || !regPass.value) {
+    alert("Completa todos los campos");
+    return;
+  }
+
+  let users = JSON.parse(localStorage.getItem("users") || "[]");
+
+  users.push({
+    user: regUser.value,
+    pass: regPass.value,
+    role: role
+  });
+
+  localStorage.setItem("users", JSON.stringify(users));
+
+  alert("Usuario creado");
+
+  showLogin();
+}
+
+function login() {
+  if (!loginUser.value || !loginPass.value) {
+    alert("Completa usuario y contraseña");
+    return;
+  }
+
+  let users = JSON.parse(localStorage.getItem("users") || "[]");
+
+  let found = users.find(u =>
+    u.user === loginUser.value &&
+    u.pass === loginPass.value
+  );
+
+  if (!found) {
+    alert("Credenciales incorrectas");
+    return;
+  }
+
+  document.getElementById("loginBox").classList.add("hidden");
+  document.getElementById("registerBox").classList.add("hidden");
+  document.getElementById("app").classList.remove("hidden");
+
+  role = found.role;
+
+  if (role === "administrador") {
+    document.getElementById("adminPanel").classList.remove("hidden");
+    loadAdmin();
+  } else {
+    document.getElementById("userPanel").classList.remove("hidden");
+    loadUserResponses();
+  }
+}
