@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: CI-CD Pipeline
 
 on:
   push:
@@ -12,8 +12,14 @@ jobs:
       - name: Clonar repo
         uses: actions/checkout@v4
 
+      - name: Login a Docker Hub
+        run: echo "${{ secrets.DOCKER_PASS }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
+
       - name: Build Docker image
-        run: docker build -t mi-app .
+        run: docker build -t ${{ secrets.DOCKER_USER }}/mi-app .
 
       - name: Test básico
-        run: docker run mi-app echo "BUILD OK"
+        run: docker run ${{ secrets.DOCKER_USER }}/mi-app echo "BUILD OK"
+
+      - name: Push a Docker Hub
+        run: docker push ${{ secrets.DOCKER_USER }}/mi-app
