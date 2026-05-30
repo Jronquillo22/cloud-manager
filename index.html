@@ -9,16 +9,30 @@
 <body>
 
 <!-- LOGIN -->
-<div id="loginBox" class="center-box">
-  <h2>Inicio de sesión</h2>
+<div id="loginBox" class="auth-container">
 
-  <input id="loginUser" placeholder="Usuario">
-  <input id="loginPass" type="password" placeholder="Contraseña">
+  <div class="auth-card">
 
-  <button onclick="login()">Ingresar</button>
-  <button onclick="showRegister()">Crear cuenta</button>
+    <h2>Inicio de sesión</h2>
+
+    <div class="form-group">
+      <label>Usuario</label>
+      <input id="loginUser" placeholder="Ingrese usuario">
+    </div>
+
+    <div class="form-group">
+      <label>Contraseña</label>
+      <input id="loginPass" type="password" placeholder="Ingrese contraseña">
+    </div>
+
+    <button onclick="login()">Ingresar</button>
+    <button onclick="showRegister()">Crear cuenta</button>
+
+  </div>
+
 </div>
 
+<!-- REGISTER -->
 <div id="registerBox" class="auth-container hidden">
 
   <div class="auth-card">
@@ -52,6 +66,7 @@
   </div>
 
 </div>
+
 <!-- APP -->
 <div id="app" class="hidden">
 
@@ -69,10 +84,12 @@
 
     <!-- USER PANEL -->
     <div id="userPanel" class="view hidden">
-      <h2>Panel de Usuario2</h2>
-      
+
+      <h2>Panel de Usuario</h2>
+
       <div class="grid">
 
+        <!-- CITA -->
         <div class="card">
           <h3>Agendar cita</h3>
           <input id="citaServicio" placeholder="Servicio">
@@ -80,18 +97,24 @@
           <button onclick="guardarCita()">Enviar</button>
         </div>
 
+        <!-- COTIZACIÓN -->
         <div class="card">
           <h3>Cotización</h3>
-         <select id="cotServicio">
+
+          <select id="cotServicio">
             <option value="Infraestructura Cloud">Infraestructura Cloud</option>
             <option value="Soporte Técnico">Soporte Técnico</option>
             <option value="Seguridad Informática">Seguridad Informática</option>
             <option value="Despliegue DevOps">Despliegue DevOps</option>
             <option value="Automatización de sistemas">Automatización de sistemas</option>
-            </select>
+          </select>
+
+          <input id="cotDetalle" placeholder="Detalle de la solicitud">
+
           <button onclick="guardarCotizacion()">Enviar</button>
         </div>
 
+        <!-- RESPUESTAS -->
         <div class="card full">
           <h3>Respuestas</h3>
           <div id="userResponses"></div>
