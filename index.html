@@ -9,45 +9,41 @@
 <body>
 
 <!-- LOGIN -->
-<!-- LOGIN -->
 <div id="loginBox" class="auth-container">
-
   <div class="auth-card">
 
     <h2>Inicio de sesión</h2>
 
     <div class="form-group">
       <label>Usuario</label>
-      <input id="loginUser" placeholder="Ingrese usuario">
+      <input id="loginUser" placeholder="Usuario">
     </div>
 
     <div class="form-group">
       <label>Contraseña</label>
-      <input id="loginPass" type="password" placeholder="Ingrese contraseña">
+      <input id="loginPass" type="password" placeholder="Contraseña">
     </div>
 
     <button onclick="login()">Ingresar</button>
     <button onclick="showRegister()">Crear cuenta</button>
 
   </div>
-
 </div>
 
 <!-- REGISTER -->
 <div id="registerBox" class="auth-container hidden">
-
   <div class="auth-card">
 
     <h2>Registro</h2>
 
     <div class="form-group">
       <label>Usuario</label>
-      <input id="regUser" placeholder="Ingrese usuario">
+      <input id="regUser" placeholder="Usuario">
     </div>
 
     <div class="form-group">
       <label>Contraseña</label>
-      <input id="regPass" type="password" placeholder="Ingrese contraseña">
+      <input id="regPass" type="password" placeholder="Contraseña">
     </div>
 
     <div class="form-group">
@@ -65,32 +61,28 @@
     <button onclick="showLogin()">Volver</button>
 
   </div>
-
 </div>
 
 <!-- APP -->
 <div id="app" class="hidden">
 
-  <!-- NAVBAR -->
   <div class="navbar">
     <div>TechNova Services</div>
 
     <div class="nav-buttons">
-      <button onclick="showView('user')">Panel</button>
+      <button onclick="showView()">Panel</button>
       <button onclick="logout()">Salir</button>
     </div>
   </div>
 
   <div class="content">
 
-    <!-- USER PANEL -->
+    <!-- USER -->
     <div id="userPanel" class="view hidden">
-
       <h2>Panel de Usuario</h2>
 
       <div class="grid">
 
-        <!-- CITA -->
         <div class="card">
           <h3>Agendar cita</h3>
           <input id="citaServicio" placeholder="Servicio">
@@ -98,24 +90,20 @@
           <button onclick="guardarCita()">Enviar</button>
         </div>
 
-        <!-- COTIZACIÓN -->
         <div class="card">
           <h3>Cotización</h3>
 
           <select id="cotServicio">
-            <option value="Infraestructura Cloud">Infraestructura Cloud</option>
-            <option value="Soporte Técnico">Soporte Técnico</option>
-            <option value="Seguridad Informática">Seguridad Informática</option>
-            <option value="Despliegue DevOps">Despliegue DevOps</option>
-            <option value="Automatización de sistemas">Automatización de sistemas</option>
+            <option>Infraestructura Cloud</option>
+            <option>Soporte Técnico</option>
+            <option>Seguridad Informática</option>
+            <option>DevOps</option>
           </select>
 
-          <input id="cotDetalle" placeholder="Detalle de la solicitud">
-
+          <input id="cotDetalle" placeholder="Detalle">
           <button onclick="guardarCotizacion()">Enviar</button>
         </div>
 
-        <!-- RESPUESTAS -->
         <div class="card full">
           <h3>Respuestas</h3>
           <div id="userResponses"></div>
@@ -124,20 +112,12 @@
       </div>
     </div>
 
-    <!-- ADMIN PANEL -->
+    <!-- ADMIN -->
     <div id="adminPanel" class="view hidden">
-
       <h2>Panel Administrador</h2>
 
       <h3>Usuarios</h3>
       <table>
-        <thead>
-          <tr>
-            <th>Usuario</th>
-            <th>Rol</th>
-            <th>Acción</th>
-          </tr>
-        </thead>
         <tbody id="userTable"></tbody>
       </table>
 
