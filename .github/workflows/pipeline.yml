@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build Docker image
-        run: docker build -t jronquillo22/mi-app:latest .
+        run: docker build -t jimmyr226/mi-app:latest .
 
       - name: Test básico
         run: docker run jimmyr226/mi-app:latest echo "CI OK"
@@ -33,7 +33,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASS }}
 
       - name: Build image
-        run: docker build -t jronquillo22/mi-app:latest .
+        run: docker build -t jimmyr226/mi-app:latest .
 
       - name: Push image
-        run: docker push jronquillo22/mi-app:latest
+        run: docker push jimmyr226/mi-app:latest
