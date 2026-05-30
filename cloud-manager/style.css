@@ -14,6 +14,9 @@ body {
   align-items: center;
   background: #0d1117;
 }
+.auth-container.hidden {
+  display: none !important;
+}
 
 .auth-card {
   width: 380px;
@@ -97,7 +100,7 @@ table {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 button {
@@ -111,4 +114,8 @@ button {
 
 button:hover {
   background: #2ea043;
+}
+
+#loginBox {
+  border: 3px solid red;
 }
